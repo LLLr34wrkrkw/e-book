@@ -60,15 +60,8 @@ const UploadBook =  ({navigation}) => {
     }
   }
 
-  return (
-    
-    
-    
-    <View style={{width: "100%", height:"100%"}}>
-      <View style={{marginVertical: 0}}>
-        <Button title="Select pdf file to upload" style={{fontSize: 40}} onPress={pickFiles}></Button>
-      </View>
-      <View>
+  // Additional options
+  /* <View>
           <Button title="Select link to add an article" onPress={() => Alert.prompt("Adding an article", "Please write down the link of the article", async (link_) => {
             Alert.prompt("Adding an article", "Please name this arcticle", async (name) => await add_to_json([name, link_.substring(6)], 'filesForWeb.json'));
           })}></Button>
@@ -76,7 +69,29 @@ const UploadBook =  ({navigation}) => {
       
       <View style={{marginVertical: 0}}>
         <Button title="Select pdf fil d" style={{fontSize: 40}} onPress={() => navigation.navigate('Test2')}></Button>
+      </View> */
+          const views = [];
+          views.push(
+<View key="UploadOption1" style={{marginVertical: 0}}>
+        <Button title="Select pdf file to upload" style={{fontSize: 40}} onPress={pickFiles}></Button>
       </View>
+          );
+  if(Platform.OS == 'ios')
+  {
+    views.push(
+      <View key="UploadOption2">
+          <Button title="Select link to add an article" onPress={() => Alert.prompt("Adding an article", "Please write down the link of the article", async (link_) => {
+            Alert.prompt("Adding an article", "Please name this arcticle", async (name) => await add_to_json([name, link_.substring(6)], 'filesForWeb.json'));
+          })}></Button>
+      </View>
+    );
+  }
+  return (
+    
+    
+    
+    <View style={{width: "100%", height:"100%"}}>
+      {views}
     </View>
   );
 }
