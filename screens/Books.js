@@ -94,36 +94,31 @@ export default function Books({navigation, route})
             {
                 let counter = i;
                     views2.push(
-                            
-                            <MenuProvider style={styles.menuProvider} key={fileName + 'pdf' + 'MenuProvider'}>
-                                <TouchableWithoutFeedback key={fileName + 'pdf' + 'Touchable'} onPress={() => navigation.navigate('Read', {paramKey: pathToFile})} onLongPress={()=>{console.log(counter);arr[counter].open();}} >
+                        <TouchableWithoutFeedback style={styles.menuTriggerTouchable} key={fileName + 'pdf' + 'Touchable'} onPress={() => navigation.navigate('Read', {paramKey: pathToFile})} onLongPress={()=>{arr[counter].open();}} >
+                            <View style={styles.touchableView}>              
+                                <MenuProvider style={styles.menuProvider} key={fileName + 'pdf' + 'MenuProvider'}>
                                 
-                                    <View key={fileName + fileName}>
+                                            <Menu  ref={c => (arr.push(c))} style={styles.menu}  key={fileName + 'Menu' + 'pdf'}> 
+                                            <Text style={styles.menuTriggerText} numberOfLines={1} > {(fileName.lastIndexOf('.') != -1) ? fileName.substring(0, fileName.lastIndexOf('.')) : fileName}</Text>
+                                       
+                                                    <MenuTrigger key={fileName + 'MenuTrigger' + 'pdf'} style={styles.menuTrigger}>
 
-                                        <Text numberOfLines={1}  style={styles.headline}> {fileName}</Text>
-                                        
-                                        <Menu  ref={c => (arr.push(c))} style={styles.menu}  key={fileName + 'Menu' + 'pdf'}> 
+                                                    </MenuTrigger>
+                                                    <MenuOptions key={fileName + 'MenuOptions' + 'pdf'} style={styles.menuOptions}>
 
-                                            <MenuTrigger text="" key={fileName + 'MenuTrigger' + 'pdf'} />
+                                                        <MenuOption  key={fileName + 'MenuOption' + 'pdf'} onSelect={() => Sharing.shareAsync('file:' + pathToFile)} text='Share' style={styles.menuOption}>
+                                                        </MenuOption>
+                                                    
 
-                                            <MenuOptions key={fileName + 'MenuOptions' + 'pdf'} style={styles.menuOptions}>
+                                                        <MenuOption key={fileName + 'MenuOption2' + 'pdf'} onSelect={() => {delete_key_from_json(fileName, jsonForExtension[extentions[i]]); navigation.navigate('Home')}} text='Delete' style={styles.menuOption}>
+                                                        </MenuOption>
 
-                                                <MenuOption  key={fileName + 'MenuOption' + 'pdf'} onSelect={() => Sharing.shareAsync('file:' + pathToFile)} text='Share' style={styles.menuOption}>
-                                                </MenuOption>
-                                            
+                                                    </MenuOptions>
 
-                                                <MenuOption key={fileName + 'MenuOption2' + 'pdf'} onSelect={() => {delete_key_from_json(fileName, jsonForExtension[extentions[i]]); navigation.navigate('Home')}} text='Delete' style={styles.menuOption}>
-                                                </MenuOption>
-
-                                            </MenuOptions>
-
-                                        </Menu>
-
-                                    </View>
-
-                                </TouchableWithoutFeedback>
-
-                            </MenuProvider>
+                                            </Menu>
+                                </MenuProvider>
+                            </View>
+                        </TouchableWithoutFeedback>
                      );
                      i++;
                  }

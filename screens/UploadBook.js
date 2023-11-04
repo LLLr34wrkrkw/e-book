@@ -1,4 +1,4 @@
-import {View, Text, Button, WebView, Alert, Platform} from 'react-native'
+import {View, Text, Button, WebView, Alert, Platform, TouchableWithoutFeedback} from 'react-native'
 import React from 'react'
 
 //import  DocumentPicker  from 'react-native-document-picker';
@@ -101,11 +101,12 @@ const UploadBook =  ({navigation}) => {
     {
     
           views.push(
-            <View key={extention_of_file} style={styles.forUploadBookOptions}>
-                    <Button color="white" title={"Select " + extention_of_file + " file to upload"} onPress={()=>pickFiles(extention_of_file)}></Button>
-                  </View>
-            );
-    
+            <TouchableWithoutFeedback onPress={()=>pickFiles(extention_of_file)}>
+              <View key={extention_of_file} style={styles.forUploadBookOptions}>
+                      <Text style={{fontSize: 20, color:"white"}}>Select {extention_of_file} file to upload</Text>
+              </View>      
+            </TouchableWithoutFeedback>
+    );
     }
 
 

@@ -21,10 +21,10 @@ export default StyleSheet.create({
       {
          fontSize: 18,
          height: 30,
-         width: "100%",
-         backgroundColor: '#40c8ff',
-         justifyContent: 'flex-end',
-         alignItems: 'flex-end',
+         
+    //     backgroundColor: '#40c8ff',
+         justifyContent: 'center',
+         alignItems: 'center',
 
       },
       menuOptions:
@@ -39,10 +39,9 @@ export default StyleSheet.create({
       {        
         textAlign: 'center',
         justifyContent: 'center',
-        zIndex: 1,
-        width: "100%",
+        zIndex: 2,
         justifyContent: 'center',
-        alignItems: 'center'
+        alignItems: 'center',
       },
       scroll:
       {
@@ -61,20 +60,39 @@ export default StyleSheet.create({
         borderTopWidth: 2,
         borderBottomWidth: 2,
         borderBottomColor: 'black',
-        height: 50
+        height: 50,
+        marginTop: 15
 
       },
       forUploadBookOptions: 
       {
-        backgroundColor: "dodgerblue",
+      backgroundColor: "dodgerblue",
         flex: 1,
         marginVertical: 30,
         borderRadius: 36,
         justifyContent: 'center',
         alignItems: 'center'
       },
-      forUploadBookOptionsText: 
+      menuTrigger: 
       {
-
+        width: "100%"
+      }
+      ,
+      menuTriggerText:
+      {
+        color: "white",
+        fontSize: 25,
+      },
+      menuTriggerTouchable:
+      {
+        backgroundColor: 'green',
+        
+      },
+      touchableView:
+      {
+        backgroundColor: "dodgerblue",
+        marginVertical: 20,
+        borderRadius: 30,
+        justifyContent: 'center',
       }
   });
