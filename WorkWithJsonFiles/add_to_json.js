@@ -1,6 +1,6 @@
 import * as FileSystem from 'expo-file-system';
 
-const add_to_json = async function(arr, name_of_json = 'files.json')
+const add_to_json = async function(arr, name_of_json = 'filesForPdf.json')
 {
   const json_ = await FileSystem.readAsStringAsync(FileSystem.cacheDirectory + name_of_json);
   await FileSystem.writeAsStringAsync(FileSystem.cacheDirectory + name_of_json, json_.substring(0, json_.length - 1) + ',' + `${arr[0]}` + ':' + `${arr[1]}` + '}');

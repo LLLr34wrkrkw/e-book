@@ -16,6 +16,13 @@ const jsonForExtention = Get_jsonForExtention();
 
 async function copyFileToCache(extention_of_file, fileDetails)
 {
+  const dictForDefiningNeededJson = {
+    'pdf' : 'filesForPdf.json',
+    'txt' : 'filesForTxt.json',
+    'doc' : 'filesForDoc.json',
+    'docx' : 'filesForDocx.json',
+    'html' : 'filesForHtml.json'
+  };
   const json_dict = await parse_json(jsonForExtention[extention_of_file]);
   if(fileDetails.canceled != true && json_dict[`${fileDetails.assets[0].name}`] == undefined)
   {        
@@ -26,8 +33,8 @@ async function copyFileToCache(extention_of_file, fileDetails)
               to: FileSystem.cacheDirectory + `${number_of_keys + 1}` + '.' + extention_of_file,
           });
 
-      
-      await add_to_json([`${fileDetails.assets[0].name}`, FileSystem.cacheDirectory.substring(5) + `${number_of_keys + 1}` + '.' + extention_of_file]);            
+      console.log(fileDetails.assets[0].uri);
+      await add_to_json([`${fileDetails.assets[0].name}`, FileSystem.cacheDirectory.substring(5) + `${number_of_keys + 1}` + '.' + extention_of_file], dictForDefiningNeededJson[extention_of_file]);            
   }
 }
 
@@ -46,7 +53,7 @@ const UploadBook =  ({navigation}) => {
           await FileSystem.writeAsStringAsync(FileSystem.cacheDirectory + jsonFile, '{' + '}');
       }
     }
-      
+    
     const dictForDefiningType = {
       'pdf' : 'application/pdf',
       'html' : 'text/html',
@@ -69,7 +76,6 @@ const UploadBook =  ({navigation}) => {
         const file_path = fileDetails.assets[0].uri;
         const extention_of_file = file_path.substring(file_path.lastIndexOf('.') + 1);
         await copyFileToCache(extention_of_file, fileDetails);
-        
         
 
         //Sharing.shareAsync(FileSystem.documentDirectory + `${fileDetails.assets[0].name}`);

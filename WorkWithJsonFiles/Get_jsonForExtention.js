@@ -1,7 +1,7 @@
 const Get_jsonForExtention = () => 
 {
     return {
-        "pdf" : "files.json",
+        "pdf" : "filesForPdf.json",
         "txt" : "filesForTxt.json",
         "docx" : "filesForDocx.json",
         "html" : "filesForHtml.json",

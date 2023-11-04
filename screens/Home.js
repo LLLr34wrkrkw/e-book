@@ -5,9 +5,14 @@ console.warn = () => {};
 
 import parse_json from '../WorkWithJsonFiles/parse_json';
 import create_empty_json from '../WorkWithJsonFiles/create_empty_json';
+import Get_jsonForExtention from '../WorkWithJsonFiles/Get_jsonForExtention';
+const jsonForExtention = Get_jsonForExtention();
+
+
 export default function Home({navigation})
 { const win = Dimensions.get('window');
 const ratio = win.width / 1656;
+
 let sizeOfOmage = 0;
 if(Platform.OS == 'ios')
 {
@@ -39,20 +44,22 @@ else{
                 async () =>{
                     const infoAboutWebFiles = await FileSystem.getInfoAsync(FileSystem.cacheDirectory + 'filesForWeb.json');
                     const infoAboutFiles = await FileSystem.getInfoAsync(FileSystem.cacheDirectory + 'files.json');
-                    if(infoAboutFiles.exists == false)
+                    for(let jsonFile of Object.values(jsonForExtention))
                     {
-                        create_empty_json(FileSystem.cacheDirectory + 'files.json');
+                      const json_file_info = await FileSystem.getInfoAsync(FileSystem.cacheDirectory + jsonFile);
+                      if(!json_file_info.exists)
+                      {
+                          await FileSystem.writeAsStringAsync(FileSystem.cacheDirectory + jsonFile, '{' + '}');
+                      }
                     }
-                    if(infoAboutWebFiles.exists == false)
-                    {
-                      create_empty_json(FileSystem.cacheDirectory + 'filesForWeb.json');
-                    }
-                    dirForPdf = await parse_json();
+                    
+                    dirForPdf = await parse_json('filesForPdf.json');
                     dirForWeb = await parse_json('filesForWeb.json');
                     dirForHtml = await parse_json('filesForHtml.json');
                     dirForTxt = await parse_json('filesForTxt.json');
                     dirForDocx = await parse_json('filesForDocx.json');
-                    navigation.navigate('Books', {paramKeyForPdf: dirForPdf, paramKeyForWeb: dirForWeb, paramKeyForHtml: dirForHtml, paramKeyForTxt: dirForTxt, paramKeyForDocx: dirForDocx});
+                    dirForDoc = await parse_json('filesForDoc.json');
+                    navigation.navigate('Books', {paramKeyForPdf: dirForPdf, paramKeyForWeb: dirForWeb, paramKeyForHtml: dirForHtml, paramKeyForTxt: dirForTxt, paramKeyForDocx: dirForDocx, paramKeyForDoc: dirForDoc});
             }
                  } >
                   <View style={styles.viewForBooksAndUploadBook}>

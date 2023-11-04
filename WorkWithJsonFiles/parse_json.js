@@ -1,6 +1,6 @@
 import * as FileSystem from 'expo-file-system';
 
-const parse_json =  async function(name_of_json = 'files.json')
+const parse_json =  async function(name_of_json = 'filesForPdf.json')
 {
 
       const json_string = await FileSystem.readAsStringAsync(FileSystem.cacheDirectory + name_of_json);

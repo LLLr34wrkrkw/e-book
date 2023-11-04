@@ -63,15 +63,17 @@ export default function Books({navigation, route})
     let dirForWeb = route.params.paramKeyForWeb;
     let dirForHtml = route.params.paramKeyForHtml;
     let dirForTxt = route.params.paramKeyForTxt;
-    let dirForDocx = route.params.paramKeyForTxt;
-    
+    let dirForDocx = route.params.paramKeyForDocx;
+    let dirForDoc = route.params.paramKeyForDoc;
 
     let counter = 0;
     const arr = [];
     const views2 = [];
     if(Platform.OS == 'ios')
     {
-        const arrForPdfReader = [dirForDocx, dirForHtml, dirForPdf, dirForTxt];
+        const arrForPdfReader = [dirForDocx, dirForHtml, dirForPdf, dirForTxt, dirForDoc];
+        const extentions = ['Docx', 'Html', 'Pdf', 'Txt', 'Doc'];
+        let i = 0;
         for(let currentDir of arrForPdfReader)
         {
             for(let [fileName, pathToFile] of Object.entries(currentDir))
@@ -94,7 +96,7 @@ export default function Books({navigation, route})
                                                 </MenuOption>
                                             
 
-                                                <MenuOption key={fileName + 'MenuOption2' + 'pdf'} onSelect={async () => {await delete_key_from_json(fileName);dir = await parse_json(); // ?? Fix ??
+                                                <MenuOption key={fileName + 'MenuOption2' + 'pdf'} onSelect={async () => {await delete_key_from_json(fileName, 'filesFor' + extentions[i] + '.json');dir = await parse_json(); // ?? Fix ??
                                                      navigation.navigate('Home')}} text='Delete' style={styles.menuOption}>
                                                 </MenuOption>
 
@@ -108,7 +110,9 @@ export default function Books({navigation, route})
 
                             </MenuProvider>
                      );
-            }
+                 }
+                 i++;
+        }
             for(let [fileName, pathToFile] of Object.entries(dirForWeb))
             {
                 views2.push(
@@ -145,7 +149,7 @@ export default function Books({navigation, route})
                 );
             }
 
-         } /* Android pdf
+         /* Android pdf
             else{
                 views2.push(
                     <MenuProvider  key={fileName + 'androidMenuProvider'} style={styles.menuProvider}>
@@ -189,6 +193,7 @@ export default function Books({navigation, route})
             }*/
     }
     else{
+        console.log("DirForPdf: ", dirForPdf);
         for(let [fileName, pathToFile] of Object.entries(dirForPdf))
         {
             views2.push(
@@ -216,7 +221,7 @@ export default function Books({navigation, route})
                                             </MenuOption>
                                         
 
-                                            <MenuOption  key={fileName + 'androidOption2'} onSelect={async () => {await delete_key_from_json(fileName);dir = await parse_json();
+                                            <MenuOption  key={fileName + 'androidOption2'} onSelect={async () => {await delete_key_from_json(fileName, 'filesForPdf.json');dir = await parse_json();
                                                 navigation.navigate('Home')}} text='Delete' style={styles.menuOption}>
                                             </MenuOption>
 
@@ -233,6 +238,8 @@ export default function Books({navigation, route})
         }
 
         const arrForReadByLink = [dirForHtml, dirForTxt, dirForWeb];
+        const extentions = ['html', 'txt', 'web'];
+        console.log("Dir for txt", dirForTxt);
         for(let currentDir of arrForReadByLink)
         {
             for(let [fileName, pathToFile] of Object.entries(currentDir))
@@ -256,7 +263,7 @@ export default function Books({navigation, route})
                                         </MenuOption>
                                     
 
-                                        <MenuOption key={fileName + 'WebMenuOption2'} onSelect={async () => {await delete_key_from_json(fileName, 'filesForWeb.json');
+                                        <MenuOption key={fileName + 'WebMenuOption2'} onSelect={async () => {await delete_key_from_json(fileName, 'filesFor' + extentions[i] + '.json');
                                             navigation.navigate('Home')}} text='Delete' style={styles.menuOption}>
                                         </MenuOption>
 
