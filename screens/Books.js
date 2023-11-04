@@ -238,7 +238,7 @@ export default function Books({navigation, route})
         }
 
         const arrForReadByLink = [dirForHtml, dirForTxt, dirForWeb];
-        const extentions = ['html', 'txt', 'web'];
+        const extentions = ['Html', 'Txt', 'Web'];
         console.log("Dir for txt", dirForTxt);
         for(let currentDir of arrForReadByLink)
         {
@@ -259,10 +259,10 @@ export default function Books({navigation, route})
 
                                     <MenuOptions key={fileName + 'WebMenuOptions'} style={styles.menuOptions}>
 
-                                        <MenuOption  key={fileName + 'WebMenuOption'} onSelect={() => Sharing.shareAsync(pathToFile)} text='Share' style={styles.menuOption}>
+                                        <MenuOption  key={fileName + 'WebMenuOption'} onSelect={async () => await Sharing.shareAsync(pathToFile)} text='Share' style={styles.menuOption}>
                                         </MenuOption>
                                     
-
+   
                                         <MenuOption key={fileName + 'WebMenuOption2'} onSelect={async () => {await delete_key_from_json(fileName, 'filesFor' + extentions[i] + '.json');
                                             navigation.navigate('Home')}} text='Delete' style={styles.menuOption}>
                                         </MenuOption>
