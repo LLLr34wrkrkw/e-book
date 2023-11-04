@@ -44,23 +44,29 @@ else{
             <View style={{flex: 1}}>
             <TouchableOpacity style={styles.forBooks} onPress={
                 async () =>{
-                  
+           
                     for(let jsonFile of Object.values(jsonForExtention))
                     {
                       const json_file_info = await FileSystem.getInfoAsync(FileSystem.cacheDirectory + jsonFile);
                       if(!json_file_info.exists)
                       {
                           await FileSystem.writeAsStringAsync(FileSystem.cacheDirectory + jsonFile, '{' + '}');
+                        
                       }
                     }
                     
+                    
                     dirForPdf = await parse_json(jsonForExtention['pdf']);
-                    dirForWeb = await parse_json(jsonForExtention['web']);
+                    
                     dirForHtml = await parse_json(jsonForExtention['html']);
+                    
                     dirForTxt = await parse_json(jsonForExtention['txt']);
+                   
                     dirForDocx = await parse_json(jsonForExtention['docx']);
+                    console.log(dirForDocx);
                     dirForDoc = await parse_json(jsonForExtention['doc']);
-                    navigation.navigate('Books', {paramKeyForPdf: dirForPdf, paramKeyForWeb: dirForWeb, paramKeyForHtml: dirForHtml, paramKeyForTxt: dirForTxt, paramKeyForDocx: dirForDocx, paramKeyForDoc: dirForDoc});
+                    
+                    navigation.navigate('Books', {paramKeyForPdf: dirForPdf,  paramKeyForHtml: dirForHtml, paramKeyForTxt: dirForTxt, paramKeyForDocx: dirForDocx, paramKeyForDoc: dirForDoc});
             }
                  } >
                   <View style={styles.viewForBooksAndUploadBook}>

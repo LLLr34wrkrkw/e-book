@@ -60,7 +60,6 @@ export default function Books({navigation, route})
 
 
     let dirForPdf = route.params.paramKeyForPdf;
-    let dirForWeb = route.params.paramKeyForWeb;
     let dirForHtml = route.params.paramKeyForHtml;
     let dirForTxt = route.params.paramKeyForTxt;
     let dirForDocx = route.params.paramKeyForDocx;
@@ -79,7 +78,11 @@ export default function Books({navigation, route})
         'txt' : 'text/plain',
         'doc' : 'application/msword'
       };
-
+      
+      for(let key of arrForPdfReader)
+      {
+        console.log(key);
+      }
     if(Platform.OS == 'ios')
     {
         let i = 0;
@@ -88,8 +91,9 @@ export default function Books({navigation, route})
             for(let [fileName, pathToFile] of Object.entries(currentDir))
             {
                     views2.push(
+                            
                             <MenuProvider style={styles.menuProvider} key={fileName + 'pdf' + 'MenuProvider'}>
-                                <TouchableWithoutFeedback key={fileName + 'pdf' + 'Touchable'} onPress={() => navigation.navigate('Read', {paramKey: pathToFile})} onLongPress={()=>{arr[counter].open(); counter++}} >
+                                <TouchableWithoutFeedback key={fileName + 'pdf' + 'Touchable'} onPress={() => navigation.navigate('Read', {paramKey: pathToFile})} onLongPress={()=>{const tmp = counter + 1 - 1;arr[tmp].open(); counter++}} >
                                 
                                     <View key={fileName + fileName}>
 
@@ -122,40 +126,7 @@ export default function Books({navigation, route})
                  }
         
         }
-            for(let [fileName, pathToFile] of Object.entries(dirForWeb))
-            {
-                views2.push(
-                    <MenuProvider style={styles.menuProvider} key={fileName + 'WebMenuProvider'}>
-                    <TouchableWithoutFeedback key={fileName + 'WebTouchableWithoutFeedback'} onPress={() => navigation.navigate('ReadByLink', {paramKey: pathToFile})} onLongPress={()=>{arr[counter].open(); counter++}} >
-                    
-                        <View key={fileName + 'Web'}>
 
-                            <Text numberOfLines={1}  style={styles.headline}> {fileName}</Text>
-                            
-                            <Menu  ref={c => (arr.push(c))} style={styles.menu}  key={fileName + 'WebMenu'}> 
-
-                                <MenuTrigger text="" key={fileName + 'WebMenuTrigger'} />
-
-                                <MenuOptions key={fileName + 'WebMenuOptions'} style={styles.menuOptions}>
-
-                                    <MenuOption  key={fileName + 'WebMenuOption'} onSelect={() => Sharing.shareAsync(pathToFile)} text='Share' style={styles.menuOption}>
-                                    </MenuOption>
-                                
-
-                                    <MenuOption key={fileName + 'WebMenuOption2'} onSelect={() => { delete_key_from_json(fileName, jsonForExtension['web']); navigation.navigate('Home')}} text='Delete' style={styles.menuOption}>
-                                    </MenuOption>
-
-                                </MenuOptions>
-
-                            </Menu>
-
-                        </View>
-
-                    </TouchableWithoutFeedback>
-
-                </MenuProvider>
-                );
-            }
 
          /* Android pdf
             else{

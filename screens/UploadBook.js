@@ -25,7 +25,7 @@ async function copyFileToCache(extention_of_file, fileDetails)
     'html' : 'filesForHtml.json'
   };
   const json_dict = await parse_json(jsonForExtention[extention_of_file]);
-  if(fileDetails.canceled != true && json_dict[`${fileDetails.assets[0].name}`] == undefined)
+  if((fileDetails.canceled != true) && (json_dict[`${fileDetails.assets[0].name}`] == undefined))
   {        
       
       const number_of_keys = Object.keys(json_dict).length;
@@ -74,9 +74,8 @@ const UploadBook =  ({navigation}) => {
           }
       );
         
-        const file_path = fileDetails.assets[0].uri;
-        const extention_of_file = file_path.substring(file_path.lastIndexOf('.') + 1);
-        await copyFileToCache(extention_of_file, fileDetails);
+      
+        await copyFileToCache(neededExtention, fileDetails);
         
     }
     catch(error){
