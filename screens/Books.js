@@ -83,17 +83,20 @@ export default function Books({navigation, route})
       {
         console.log(key);
       }
+    let i = 0;
+    let j = 0;
     if(Platform.OS == 'ios')
     {
-        let i = 0;
+        
         for(let currentDir of arrForPdfReader)
         {
             for(let [fileName, pathToFile] of Object.entries(currentDir))
             {
+                let counter = i;
                     views2.push(
                             
                             <MenuProvider style={styles.menuProvider} key={fileName + 'pdf' + 'MenuProvider'}>
-                                <TouchableWithoutFeedback key={fileName + 'pdf' + 'Touchable'} onPress={() => navigation.navigate('Read', {paramKey: pathToFile})} onLongPress={()=>{const tmp = counter + 1 - 1;arr[tmp].open(); counter++}} >
+                                <TouchableWithoutFeedback key={fileName + 'pdf' + 'Touchable'} onPress={() => navigation.navigate('Read', {paramKey: pathToFile})} onLongPress={()=>{console.log(counter);arr[counter].open();}} >
                                 
                                     <View key={fileName + fileName}>
 
@@ -172,11 +175,12 @@ export default function Books({navigation, route})
             }*/
     }
     else{
-        let j = 0;
+        
         for(let currentDir of arrForPdfReader)
         {
             for(let [fileName, pathToFile] of Object.entries(currentDir))
             {
+                let counter = j;
                 views2.push
                     (
                             <MenuProvider  key={fileName + 'androidMenuProvider'} style={styles.menuProvider}>
@@ -303,9 +307,9 @@ export default function Books({navigation, route})
     }
       return (
         <TouchableWithoutFeedback onPress={() => {
-            for(let j = 0; j < counter; j++) 
+            for(let k = 0; k < i + j; k++) 
             {
-                arr[j].close();
+                arr[k].close();
             }
         }}>
         <ScrollView style={styles.test}>
