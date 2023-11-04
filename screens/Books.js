@@ -1,4 +1,4 @@
-import {View, Image, Text, Button, ScrollView, Platform, RefreshControl , TouchableOpacity, TouchableWithoutFeedback, StyleSheet, TouchableHighlight} from 'react-native';
+import {View, Alert,  Image, Text, Button, ScrollView, Platform, RefreshControl , TouchableOpacity, TouchableWithoutFeedback, StyleSheet, TouchableHighlight} from 'react-native';
 import * as FileSystem from 'expo-file-system';
 import * as IntentLauncher from 'expo-intent-launcher';
 import * as Sharing from "expo-sharing";
@@ -12,15 +12,53 @@ import {
     MenuTrigger,
   } from 'react-native-popup-menu';
 
+
+
+import {useEffect, useState} from 'react';
 import styles from './css/styles';
   
 import parse_json from '../WorkWithJsonFiles/parse_json';
 import delete_key_from_json from '../WorkWithJsonFiles/delete_key_from_json';
- 
-
+ import Get_jsonForExtention from '../WorkWithJsonFiles/Get_jsonForExtention';
+const jsonForExtension = Get_jsonForExtention();
+import create_empty_json from '../WorkWithJsonFiles/create_empty_json';
 
 export default function Books({navigation, route})
 {
+    useEffect(() =>
+    {navigation.setOptions(
+      {headerRight: 
+        () => (<Button title="Delete all" color="red" onPress={() => { 
+        Alert.alert('Warning', 'Are you sure that you want to delete all files?', [
+          {
+            text: 'Delete',
+            onPress: () => {
+              for(let jsonFile of Object.values(jsonForExtension))
+              {
+                create_empty_json(jsonFile);
+              }
+              navigation.navigate('Home');
+            }
+          }
+          ,
+          {
+            text: 'Cancel',
+            onPress: () => {}
+
+          }
+        ],
+        {
+          cancelable: true
+        }
+        ); 
+       
+      }
+      }></Button>),}
+    );
+}, [navigation])
+    
+
+
     let dir = route.params.paramKey;
     let dirForWeb = route.params.paramKeyForWeb;
     const x = [];
