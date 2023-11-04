@@ -14,20 +14,20 @@ import add_to_json from '../WorkWithJsonFiles/add_to_json';
 import Get_jsonForExtention from '../WorkWithJsonFiles/Get_jsonForExtention';
 const jsonForExtention = Get_jsonForExtention();
 
-async function copyFileToCache(extension_of_file, fileDetails)
+async function copyFileToCache(extention_of_file, fileDetails)
 {
-  const json_dict = await parse_json(jsonForExtension[extension_of_file]);
+  const json_dict = await parse_json(jsonForExtention[extention_of_file]);
   if(fileDetails.canceled != true && json_dict[`${fileDetails.assets[0].name}`] == undefined)
   {        
       
       const number_of_keys = Object.keys(json_dict).length;
       const copyImage =  await FileSystem.copyAsync({
               from: fileDetails.assets[0].uri,
-              to: FileSystem.cacheDirectory + `${number_of_keys + 1}` + '.' + extension_of_file,
+              to: FileSystem.cacheDirectory + `${number_of_keys + 1}` + '.' + extention_of_file,
           });
 
       
-      await add_to_json([`${fileDetails.assets[0].name}`, FileSystem.cacheDirectory.substring(5) + `${number_of_keys + 1}` + '.' + extension_of_file]);            
+      await add_to_json([`${fileDetails.assets[0].name}`, FileSystem.cacheDirectory.substring(5) + `${number_of_keys + 1}` + '.' + extention_of_file]);            
   }
 }
 
@@ -35,7 +35,7 @@ const UploadBook =  ({navigation}) => {
     
     const pickFiles = async () => {
      
-    for(let jsonFile of Object.values(jsonForExtension))
+    for(let jsonFile of Object.values(jsonForExtention))
     {
       const json_file_info = await FileSystem.getInfoAsync(FileSystem.cacheDirectory + jsonFile);
       if(!json_file_info.exists)
@@ -57,8 +57,8 @@ const UploadBook =  ({navigation}) => {
       );
         
         const file_path = fileDetails.assets[0].uri;
-        const extension_of_file = file_path.substring(file_path.lastIndexOf('.') + 1);
-        await copyFileToCache(extension_of_file, fileDetails);
+        const extention_of_file = file_path.substring(file_path.lastIndexOf('.') + 1);
+        await copyFileToCache(extention_of_file, fileDetails);
         
         
 
