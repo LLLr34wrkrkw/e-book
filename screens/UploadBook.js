@@ -110,7 +110,7 @@ const UploadBook =  ({navigation}) => {
     {
       if(!(Platform.OS == 'android' && extention_of_file == 'docx'))
       {
-          if(extention_of_file != "web") // I know that web is not an extention of a file ...
+          if((extention_of_file != "web") && (extention_of_file != "doc") ) // I know that web is not an extention of a file ...
           {
           views.push(
             <View key={extention_of_file} style={{marginVertical: 0}}>
