@@ -1,6 +1,7 @@
 {
   "expo": {
     "name": "ExpoBookStorage",
+    "description": "app for reading books",
     "slug": "ExpoBookStorage",
     "version": "1.0.0",
     "orientation": "portrait",
@@ -15,16 +16,40 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.kvestorexpo.ExpoBookStorage"
     },
     "android": {
       "adaptiveIcon": {
+        "package": "com.yourcompany.ExpoBookStorage",
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "package": "com.kvestorexpo.ExpoBookStorage"
+    },
+    "build": {
+      "preview": {
+        "android": {
+          "buildType": "apk"
+        }
+      },
+      "preview2": {
+        "android": {
+          "gradleCommand": ":app:assembleRelease"
+        }
+      },
+      "preview3": {
+        "developmentClient": true
+      },
+      "production": {}
     },
     "web": {
       "favicon": "./assets/favicon.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "708f7244-24ba-4f48-838d-d1ce21fac315"
+      }
     }
   }
 }

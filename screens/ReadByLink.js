@@ -13,6 +13,7 @@ export default function  ReadByLink  ({route}){
   {
     console.log(route.params.paramKey);
     return(<WebView
+      style={{width:"100%", height:"100%"}}
       originWhitelist={['*']}
       allowFileAccess={true}
       source={{uri:  'file:' + route.params.paramKey}}

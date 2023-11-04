@@ -19,7 +19,7 @@ export default function App() {
   return (
     <NavigationContainer>
       <Stack.Navigator>
-        <Stack.Screen name="Home" component={HomeScreen} options={{title:'eBook', headerTitleAlign: "center"}}/>
+        <Stack.Screen name="Home" component={HomeScreen} options={{title:'Ugarit', headerTitleAlign: "center"}}/>
         <Stack.Screen name="Books" component={BooksScreen} />
         <Stack.Screen name="UploadBook" component={UploadBookScreen} />
         <Stack.Screen name="Read" component={ReadScreen}/>

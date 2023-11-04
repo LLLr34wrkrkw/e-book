@@ -9,6 +9,7 @@ import * as Sharing from "expo-sharing";
 import create_empty_json from '../WorkWithJsonFiles/create_empty_json';
 // Name of json = name of file + '.json'
 import parse_json from '../WorkWithJsonFiles/parse_json';
+import styles from './css/styles';
 
 import add_to_json from '../WorkWithJsonFiles/add_to_json';
 import Get_jsonForExtention from '../WorkWithJsonFiles/Get_jsonForExtention';
@@ -33,7 +34,7 @@ async function copyFileToCache(extention_of_file, fileDetails)
               to: FileSystem.cacheDirectory + `${number_of_keys + 1}` + '.' + extention_of_file,
           });
 
-      console.log(fileDetails.assets[0].uri);
+          
       await add_to_json([`${fileDetails.assets[0].name}`, FileSystem.cacheDirectory.substring(5) + `${number_of_keys + 1}` + '.' + extention_of_file], dictForDefiningNeededJson[extention_of_file]);            
   }
 }
@@ -77,8 +78,6 @@ const UploadBook =  ({navigation}) => {
         const extention_of_file = file_path.substring(file_path.lastIndexOf('.') + 1);
         await copyFileToCache(extention_of_file, fileDetails);
         
-
-        //Sharing.shareAsync(FileSystem.documentDirectory + `${fileDetails.assets[0].name}`);
     }
     catch(error){
       console.log("Error occured" + error);
@@ -95,37 +94,23 @@ const UploadBook =  ({navigation}) => {
       <View style={{marginVertical: 0}}>
         <Button title="Select pdf fil d" style={{fontSize: 40}} onPress={() => navigation.navigate('Test2')}></Button>
       </View> */
-          const views = [];
+    const views = [];
 
 
-    views.push(
-      <View key="UploadOptionArticle">
-          <Button title="Select link to add an article" onPress={() => Alert.prompt("Adding an article", "Please write down the link of the article", async (link_) => {
-            Alert.prompt("Adding an article", "Please name this arcticle", async (name) => await add_to_json([name, link_.substring(6)], 'filesForWeb.json'));
-          })}></Button>
-      </View>
-    );
 
     for(let extention_of_file of Object.keys(jsonForExtention))
     {
-      if(!(Platform.OS == 'android' && extention_of_file == 'docx'))
-      {
-          if((extention_of_file != "web") && (extention_of_file != "doc") ) // I know that web is not an extention of a file ...
-          {
+    
           views.push(
-            <View key={extention_of_file} style={{marginVertical: 0}}>
-                    <Button title={"Select " + extention_of_file + " file to upload"} style={{fontSize: 40}} onPress={()=>pickFiles(extention_of_file)}></Button>
+            <View key={extention_of_file} style={styles.forUploadBookOptions}>
+                    <Button color="white" title={"Select " + extention_of_file + " file to upload"} onPress={()=>pickFiles(extention_of_file)}></Button>
                   </View>
             );
-          }
-      }
+    
     }
 
 
   return (
-    
-    
-    
     <View style={{width: "100%", height:"100%"}}>
       {views}
     </View>

@@ -1,4 +1,3 @@
-
 import {View, Button, SafeAreaView, StyleSheet, Dimensions, TouchableOpacity, Text, Image, StatusBar} from 'react-native';
 import * as FileSystem from 'expo-file-system';
 console.warn = () => {};
@@ -21,13 +20,16 @@ if(Platform.OS == 'ios')
 else{
   sizeOfOmage = 500;
 }
+/*    <View style={{flex: 8}}>
+              <Image style={{     height: sizeOfOmage,
+        width: win.width}} source={require('../images/book.png')} />
+            </View>
+*/
     try{
     return (
         <SafeAreaView style={[styles.wholePage, {flexDirection: 'column'}]}>
 
-            <View style={{flex: 8}}>
-              <Image style={{     height: sizeOfOmage,
-        width: win.width}} source={require('../images/Guy_reading_a_book.png')} />
+            <View style={{flex: 6}}>
             </View>
             <View style={{flex: 1}}>
                 <TouchableOpacity style={styles.forBooks} onPress={() => navigation.navigate('UploadBook')} >
@@ -42,8 +44,7 @@ else{
             <View style={{flex: 1}}>
             <TouchableOpacity style={styles.forBooks} onPress={
                 async () =>{
-                    const infoAboutWebFiles = await FileSystem.getInfoAsync(FileSystem.cacheDirectory + 'filesForWeb.json');
-                    const infoAboutFiles = await FileSystem.getInfoAsync(FileSystem.cacheDirectory + 'files.json');
+                  
                     for(let jsonFile of Object.values(jsonForExtention))
                     {
                       const json_file_info = await FileSystem.getInfoAsync(FileSystem.cacheDirectory + jsonFile);
@@ -53,12 +54,12 @@ else{
                       }
                     }
                     
-                    dirForPdf = await parse_json('filesForPdf.json');
-                    dirForWeb = await parse_json('filesForWeb.json');
-                    dirForHtml = await parse_json('filesForHtml.json');
-                    dirForTxt = await parse_json('filesForTxt.json');
-                    dirForDocx = await parse_json('filesForDocx.json');
-                    dirForDoc = await parse_json('filesForDoc.json');
+                    dirForPdf = await parse_json(jsonForExtention['pdf']);
+                    dirForWeb = await parse_json(jsonForExtention['web']);
+                    dirForHtml = await parse_json(jsonForExtention['html']);
+                    dirForTxt = await parse_json(jsonForExtention['txt']);
+                    dirForDocx = await parse_json(jsonForExtention['docx']);
+                    dirForDoc = await parse_json(jsonForExtention['doc']);
                     navigation.navigate('Books', {paramKeyForPdf: dirForPdf, paramKeyForWeb: dirForWeb, paramKeyForHtml: dirForHtml, paramKeyForTxt: dirForTxt, paramKeyForDocx: dirForDocx, paramKeyForDoc: dirForDoc});
             }
                  } >
@@ -121,16 +122,18 @@ const styles = StyleSheet.create({
     ,
     viewForBooksAndUploadBook:
     {
-      backgroundColor: '#e8800c',
+      backgroundColor: 'dodgerblue',
       height: 50,
       alignItems: 'center',
       justifyContent: 'center',
       marginBottom: 20,
       borderRadius: 20,
+      
     },
     mainContent:
     {
       fontSize: 30,
+      color: "white"
 
     },
  

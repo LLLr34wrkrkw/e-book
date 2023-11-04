@@ -63,5 +63,18 @@ export default StyleSheet.create({
         borderBottomColor: 'black',
         height: 50
 
+      },
+      forUploadBookOptions: 
+      {
+        backgroundColor: "dodgerblue",
+        flex: 1,
+        marginVertical: 30,
+        borderRadius: 36,
+        justifyContent: 'center',
+        alignItems: 'center'
+      },
+      forUploadBookOptionsText: 
+      {
+
       }
   });
