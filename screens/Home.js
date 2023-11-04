@@ -47,9 +47,12 @@ else{
                     {
                       create_empty_json(FileSystem.cacheDirectory + 'filesForWeb.json');
                     }
-                    dir = await parse_json();
+                    dirForPdf = await parse_json();
                     dirForWeb = await parse_json('filesForWeb.json');
-                    navigation.navigate('Books', {paramKey: dir, paramKeyForWeb: dirForWeb});
+                    dirForHtml = await parse_json('filesForHtml.json');
+                    dirForTxt = await parse_json('filesForTxt.json');
+                    dirForDocx = await parse_json('filesForDocx.json');
+                    navigation.navigate('Books', {paramKeyForPdf: dirForPdf, paramKeyForWeb: dirForWeb, paramKeyForHtml: dirForHtml, paramKeyForTxt: dirForTxt, paramKeyForDocx: dirForDocx});
             }
                  } >
                   <View style={styles.viewForBooksAndUploadBook}>

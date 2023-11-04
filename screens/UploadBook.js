@@ -1,5 +1,6 @@
-import {View, Text, Button, WebView, Alert} from 'react-native'
+import {View, Text, Button, WebView, Alert, Platform} from 'react-native'
 import React from 'react'
+
 //import  DocumentPicker  from 'react-native-document-picker';
 import * as DocumentPicker from 'expo-document-picker';
 import * as FileSystem from 'expo-file-system';
@@ -10,7 +11,6 @@ import create_empty_json from '../WorkWithJsonFiles/create_empty_json';
 import parse_json from '../WorkWithJsonFiles/parse_json';
 
 import add_to_json from '../WorkWithJsonFiles/add_to_json';
-
 import Get_jsonForExtention from '../WorkWithJsonFiles/Get_jsonForExtention';
 const jsonForExtention = Get_jsonForExtention();
 
@@ -33,7 +33,10 @@ async function copyFileToCache(extention_of_file, fileDetails)
 
 const UploadBook =  ({navigation}) => {
     
-    const pickFiles = async () => {
+
+   
+
+    const pickFiles = async (neededExtention="") => {
      
     for(let jsonFile of Object.values(jsonForExtention))
     {
@@ -80,26 +83,32 @@ const UploadBook =  ({navigation}) => {
         <Button title="Select pdf fil d" style={{fontSize: 40}} onPress={() => navigation.navigate('Test2')}></Button>
       </View> */
           const views = [];
-          views.push(
-<View key="UploadOption1" style={{marginVertical: 0}}>
-        <Button title="Select pdf file to upload" style={{fontSize: 40}} onPress={pickFiles}></Button>
-      </View>
-          );
-  if(Platform.OS == 'ios')
-  {
+
+
     views.push(
-      <View key="UploadOption2">
+      <View key="UploadOptionArticle">
           <Button title="Select link to add an article" onPress={() => Alert.prompt("Adding an article", "Please write down the link of the article", async (link_) => {
             Alert.prompt("Adding an article", "Please name this arcticle", async (name) => await add_to_json([name, link_.substring(6)], 'filesForWeb.json'));
           })}></Button>
       </View>
     );
-  }
-  views.push(
-    <View style={{marginVertical: 0}}>
-      <Button title="Select pdf fil d" style={{fontSize: 40}} onPress={() => navigation.navigate('Test2')}></Button>
-    </View>
-  );
+
+    for(let extention_of_file of Object.keys(jsonForExtention))
+    {
+      if(!(Platform.OS == 'android' && extention_of_file == 'docx'))
+      {
+          if(extention_of_file != "web") // I know that web is not an extention of a file ...
+          {
+          views.push(
+            <View key={extention_of_file} style={{marginVertical: 0}}>
+                    <Button title={"Select " + extention_of_file + " file to upload"} style={{fontSize: 40}} onPress={()=>pickFiles(extention_of_file)}></Button>
+                  </View>
+            );
+          }
+      }
+    }
+
+
   return (
     
     

@@ -4,6 +4,7 @@ const Get_jsonForExtention = () =>
         "pdf" : "files.json",
         "txt" : "filesForTxt.json",
         "docx" : "filesForDocx.json",
+        "html" : "filesForHtml.json",
         "web" : "filesForWeb.json"
       }; 
 }

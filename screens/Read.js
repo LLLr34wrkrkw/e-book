@@ -32,3 +32,6 @@ export default function Read({route})
       )
     }
 }
+
+
+//'file:' + route.params.paramKey

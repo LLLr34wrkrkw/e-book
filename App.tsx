@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View, TouchableWithoutFeedback, Button, Alert} from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
@@ -9,7 +9,11 @@ import BooksScreen from './screens/Books'
 import UploadBookScreen from './screens/UploadBook'
 import ReadScreen from './screens/Read'
 import ReadByLinkScreen from './screens/ReadByLink'
-import Test2Screen from './screens/Test2'
+
+
+import create_empty_json from './WorkWithJsonFiles/create_empty_json';
+import Get_jsonForExtention from './WorkWithJsonFiles/Get_jsonForExtention';
+const jsonForExtension = Get_jsonForExtention();
 
 export default function App() {
   return (
@@ -20,7 +24,6 @@ export default function App() {
         <Stack.Screen name="UploadBook" component={UploadBookScreen} />
         <Stack.Screen name="Read" component={ReadScreen}/>
         <Stack.Screen name="ReadByLink" component={ReadByLinkScreen}/>
-        <Stack.Screen name="Test2" component={Test2Screen} />
       </Stack.Navigator>
     </NavigationContainer>
   );

@@ -59,46 +59,42 @@ export default function Books({navigation, route})
     
 
 
-    let dir = route.params.paramKey;
+    let dirForPdf = route.params.paramKeyForPdf;
     let dirForWeb = route.params.paramKeyForWeb;
-    const x = [];
-    //console.log(`keys_of_json_dict: ${keys_of_json_dict}`);
-    for(let k in dir)
-    {
-        x.push([k, dir[k]]);
-    }    
-    const xForWeb = [];
+    let dirForHtml = route.params.paramKeyForHtml;
+    let dirForTxt = route.params.paramKeyForTxt;
+    let dirForDocx = route.params.paramKeyForTxt;
+    
 
-    for(let k in dirForWeb)
+    let counter = 0;
+    const arr = [];
+    const views2 = [];
+    if(Platform.OS == 'ios')
     {
-        xForWeb.push([k, dirForWeb[k]]);
-    }
-    console.log(xForWeb);
-      const arr = [];
-      const views2 = [];
-      for(let i = 0; i < x.length; i++)
-      {
-            if(Platform.OS == 'ios')
+        const arrForPdfReader = [dirForDocx, dirForHtml, dirForPdf, dirForTxt];
+        for(let currentDir of arrForPdfReader)
+        {
+            for(let [fileName, pathToFile] of Object.entries(currentDir))
             {
-          views2.push(
-                            <MenuProvider style={styles.menuProvider} key={`${i}` + 'a'}>
-                                <TouchableWithoutFeedback key={`${i}` + 'b'} onPress={() => navigation.navigate('Read', {paramKey: x[i][1]})} onLongPress={()=>{arr[i].open()}} >
+                    views2.push(
+                            <MenuProvider style={styles.menuProvider} key={fileName + 'pdf' + 'MenuProvider'}>
+                                <TouchableWithoutFeedback key={fileName + 'pdf' + 'Touchable'} onPress={() => navigation.navigate('Read', {paramKey: pathToFile})} onLongPress={()=>{arr[counter].open(); counter++}} >
                                 
-                                    <View key={`${i}`}>
+                                    <View key={fileName + fileName}>
 
-                                        <Text numberOfLines={1}  style={styles.headline}> {x[i][0]}</Text>
+                                        <Text numberOfLines={1}  style={styles.headline}> {fileName}</Text>
                                         
-                                        <Menu  ref={c => (arr.push(c))} style={styles.menu}  key={`${i}` + 'c'}> 
+                                        <Menu  ref={c => (arr.push(c))} style={styles.menu}  key={fileName + 'Menu' + 'pdf'}> 
 
-                                            <MenuTrigger text="" key={`${i}` + 'd'} />
+                                            <MenuTrigger text="" key={fileName + 'MenuTrigger' + 'pdf'} />
 
-                                            <MenuOptions key={`${i}` + 'e'} style={styles.menuOptions}>
+                                            <MenuOptions key={fileName + 'MenuOptions' + 'pdf'} style={styles.menuOptions}>
 
-                                                <MenuOption  key={`${i}` + 'f'} onSelect={() => Sharing.shareAsync('file:' + x[i][1])} text='Share' style={styles.menuOption}>
+                                                <MenuOption  key={fileName + 'MenuOption' + 'pdf'} onSelect={() => Sharing.shareAsync('file:' + pathToFile)} text='Share' style={styles.menuOption}>
                                                 </MenuOption>
                                             
 
-                                                <MenuOption key={`${i}` + 'f2'} onSelect={async () => {await delete_key_from_json(x[i][0]);dir = await parse_json();
+                                                <MenuOption key={fileName + 'MenuOption2' + 'pdf'} onSelect={async () => {await delete_key_from_json(fileName);dir = await parse_json(); // ?? Fix ??
                                                      navigation.navigate('Home')}} text='Delete' style={styles.menuOption}>
                                                 </MenuOption>
 
@@ -112,11 +108,48 @@ export default function Books({navigation, route})
 
                             </MenuProvider>
                      );
-            } 
+            }
+            for(let [fileName, pathToFile] of Object.entries(dirForWeb))
+            {
+                views2.push(
+                    <MenuProvider style={styles.menuProvider} key={fileName + 'WebMenuProvider'}>
+                    <TouchableWithoutFeedback key={fileName + 'WebTouchableWithoutFeedback'} onPress={() => navigation.navigate('ReadByLink', {paramKey: pathToFile})} onLongPress={()=>{arr[counter].open(); counter++}} >
+                    
+                        <View key={fileName + 'Web'}>
+
+                            <Text numberOfLines={1}  style={styles.headline}> {fileName}</Text>
+                            
+                            <Menu  ref={c => (arr.push(c))} style={styles.menu}  key={fileName + 'WebMenu'}> 
+
+                                <MenuTrigger text="" key={fileName + 'WebMenuTrigger'} />
+
+                                <MenuOptions key={fileName + 'WebMenuOptions'} style={styles.menuOptions}>
+
+                                    <MenuOption  key={fileName + 'WebMenuOption'} onSelect={() => Sharing.shareAsync(pathToFile)} text='Share' style={styles.menuOption}>
+                                    </MenuOption>
+                                
+
+                                    <MenuOption key={fileName + 'WebMenuOption2'} onSelect={async () => {await delete_key_from_json(fileName, 'filesForWeb.json');
+                                        navigation.navigate('Home')}} text='Delete' style={styles.menuOption}>
+                                    </MenuOption>
+
+                                </MenuOptions>
+
+                            </Menu>
+
+                        </View>
+
+                    </TouchableWithoutFeedback>
+
+                </MenuProvider>
+                );
+            }
+
+         } /* Android pdf
             else{
                 views2.push(
-                    <MenuProvider  key={`${i}` + 'androidMenuProvider'} style={styles.menuProvider}>
-                        <TouchableWithoutFeedback  key={`${i}` + 'androidTouchable'} onPress={async () => {uri = "file:" + x[i][1];
+                    <MenuProvider  key={fileName + 'androidMenuProvider'} style={styles.menuProvider}>
+                        <TouchableWithoutFeedback  key={fileName + 'androidTouchable'} onPress={async () => {uri = "file:" + x[i][1];
                   await FileSystem.getContentUriAsync(uri).then(cUri => {
                     IntentLauncher.startActivityAsync('android.intent.action.VIEW', {
                         data: cUri,
@@ -125,21 +158,21 @@ export default function Books({navigation, route})
                      });
                    });}} onLongPress={()=>{arr[i].open()}} >
                         
-                            <View key={`${i}` + 'android'}>
+                            <View key={fileName + 'android'}>
 
-                                <Text  key={`${i}` + 'androidText'} numberOfLines={1}  style={styles.headline}> {x[i][0]}</Text>
+                                <Text  key={fileName + 'androidText'} numberOfLines={1}  style={styles.headline}> {x[i][0]}</Text>
                                 
-                                <Menu  key={`${i}` + 'androidMenu'}  ref={c => (arr.push(c))} style={styles.menu} > 
+                                <Menu  key={fileName + 'androidMenu'}  ref={c => (arr.push(c))} style={styles.menu} > 
 
-                                    <MenuTrigger  key={`${i}` + 'androidMenuTrigger'} text="" />
+                                    <MenuTrigger  key={fileName + 'androidMenuTrigger'} text="" />
 
-                                    <MenuOptions  key={`${i}` + 'androidMenuOptions'} style={styles.menuOptions}>
+                                    <MenuOptions  key={fileName + 'androidMenuOptions'} style={styles.menuOptions}>
 
-                                        <MenuOption  key={`${i}` + 'androidOption'} onSelect={() => Sharing.shareAsync('file:' + x[i][1])} text='Share' style={styles.menuOption}>
+                                        <MenuOption  key={fileName + 'androidOption'} onSelect={() => Sharing.shareAsync('file:' + x[i][1])} text='Share' style={styles.menuOption}>
                                         </MenuOption>
                                     
 
-                                        <MenuOption  key={`${i}` + 'androidOption2'} onSelect={async () => {await delete_key_from_json(x[i][0]);dir = await parse_json();
+                                        <MenuOption  key={fileName + 'androidOption2'} onSelect={async () => {await delete_key_from_json(x[i][0]);dir = await parse_json();
                                              navigation.navigate('Home')}} text='Delete' style={styles.menuOption}>
                                         </MenuOption>
 
@@ -153,48 +186,96 @@ export default function Books({navigation, route})
 
                     </MenuProvider>
              );
-            }
+            }*/
     }
-    console.log(xForWeb);
-    for(let i = 0; i < xForWeb.length; i++)
-    {
-        views2.push(
-            <MenuProvider style={styles.menuProvider} key={`${i}` + 'WebMenuProvider'}>
-            <TouchableWithoutFeedback key={`${i}` + 'WebTouchableWithoutFeedback'} onPress={() => navigation.navigate('ReadByLink', {paramKey: xForWeb[i][1]})} onLongPress={()=>{arr[i + x.length].open()}} >
-            
-                <View key={`${i}` + 'Web'}>
+    else{
+        for(let [fileName, pathToFile] of Object.entries(dirForPdf))
+        {
+            views2.push(
+                        <MenuProvider  key={fileName + 'androidMenuProvider'} style={styles.menuProvider}>
+                            <TouchableWithoutFeedback  key={fileName + 'androidTouchable'} onPress={async () => {uri = "file:" + pathToFile;
+                                    await FileSystem.getContentUriAsync(uri).then(cUri => {
+                                    IntentLauncher.startActivityAsync('android.intent.action.VIEW', {
+                                        data: cUri,
+                                        flags: 1,
+                                        type: 'application/pdf'
+                                    });
+                                });}} onLongPress={()=>{arr[counter].open(); counter++}} >
+                            
+                                <View key={fileName + 'android'}>
 
-                    <Text numberOfLines={1}  style={styles.headline}> {xForWeb[i][0]}</Text>
-                    
-                    <Menu  ref={c => (arr.push(c))} style={styles.menu}  key={`${i}` + 'WebMenu'}> 
+                                    <Text  key={fileName + 'androidText'} numberOfLines={1}  style={styles.headline}> {fileName}</Text>
+                                    
+                                    <Menu  key={fileName + 'androidMenu'}  ref={c => (arr.push(c))} style={styles.menu} > 
 
-                        <MenuTrigger text="" key={`${i}` + 'WebMenuTrigger'} />
+                                        <MenuTrigger  key={fileName + 'androidMenuTrigger'} text="" />
 
-                        <MenuOptions key={`${i}` + 'WebMenuOptions'} style={styles.menuOptions}>
+                                        <MenuOptions  key={fileName + 'androidMenuOptions'} style={styles.menuOptions}>
 
-                            <MenuOption  key={`${i}` + 'WebMenuOption'} onSelect={() => Sharing.shareAsync(xForWeb[i][1])} text='Share' style={styles.menuOption}>
-                            </MenuOption>
+                                            <MenuOption  key={fileName + 'androidOption'} onSelect={() => Sharing.shareAsync('file:' + pathToFile)} text='Share' style={styles.menuOption}>
+                                            </MenuOption>
+                                        
+
+                                            <MenuOption  key={fileName + 'androidOption2'} onSelect={async () => {await delete_key_from_json(fileName);dir = await parse_json();
+                                                navigation.navigate('Home')}} text='Delete' style={styles.menuOption}>
+                                            </MenuOption>
+
+                                        </MenuOptions>
+
+                                    </Menu>
+
+                                </View>
+
+                            </TouchableWithoutFeedback>
+
+                        </MenuProvider>
+                );
+        }
+
+        const arrForReadByLink = [dirForHtml, dirForTxt, dirForWeb];
+        for(let currentDir of arrForReadByLink)
+        {
+            for(let [fileName, pathToFile] of Object.entries(currentDir))
+            {
+                views2.push
+                (
+                    <MenuProvider style={styles.menuProvider} key={fileName + 'WebMenuProvider'}>
+                        <TouchableWithoutFeedback key={fileName + 'WebTouchableWithoutFeedback'} onPress={() => navigation.navigate('ReadByLink', {paramKey: pathToFile})} onLongPress={()=>{arr[counter].open(); counter++}} >
                         
+                            <View key={fileName + 'Web'}>
 
-                            <MenuOption key={`${i}` + 'WebMenuOption2'} onSelect={async () => {await delete_key_from_json(xForWeb[i][0], 'filesForWeb.json');
-                                 navigation.navigate('Home')}} text='Delete' style={styles.menuOption}>
-                            </MenuOption>
+                                <Text numberOfLines={1}  style={styles.headline}> {fileName}</Text>
+                                
+                                <Menu  ref={c => (arr.push(c))} style={styles.menu}  key={fileName + 'WebMenu'}> 
 
-                        </MenuOptions>
+                                    <MenuTrigger text="" key={fileName + 'WebMenuTrigger'} />
 
-                    </Menu>
+                                    <MenuOptions key={fileName + 'WebMenuOptions'} style={styles.menuOptions}>
 
-                </View>
+                                        <MenuOption  key={fileName + 'WebMenuOption'} onSelect={() => Sharing.shareAsync(pathToFile)} text='Share' style={styles.menuOption}>
+                                        </MenuOption>
+                                    
 
-            </TouchableWithoutFeedback>
+                                        <MenuOption key={fileName + 'WebMenuOption2'} onSelect={async () => {await delete_key_from_json(fileName, 'filesForWeb.json');
+                                            navigation.navigate('Home')}} text='Delete' style={styles.menuOption}>
+                                        </MenuOption>
 
-        </MenuProvider>
-        );
+                                    </MenuOptions>
+
+                                </Menu>
+
+                            </View>
+
+                        </TouchableWithoutFeedback>
+
+                    </MenuProvider>
+                );
+            }
+        }
     }
-
       return (
         <TouchableWithoutFeedback onPress={() => {
-            for(let j = 0; j < x.length + xForWeb.length; j++) 
+            for(let j = 0; j < counter; j++) 
             {
                 arr[j].close();
             }
