@@ -5,7 +5,8 @@ const Get_jsonForExtention = () =>
         "txt" : "filesForTxt.json",
         "docx" : "filesForDocx.json",
         "html" : "filesForHtml.json",
-        "web" : "filesForWeb.json"
+        "web" : "filesForWeb.json",
+        "doc" : "filesForDoc.json"
       }; 
 }
 

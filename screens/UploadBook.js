@@ -47,7 +47,13 @@ const UploadBook =  ({navigation}) => {
       }
     }
       
-    
+    const dictForDefiningType = {
+      'pdf' : 'application/pdf',
+      'html' : 'text/html',
+      'docx' : 'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+      'txt' : 'text/plain',
+      'doc' : 'application/msword'
+    };
 
      try{
         
@@ -56,6 +62,7 @@ const UploadBook =  ({navigation}) => {
       (
           {
             copyTo: 'cachesDirectory',
+            type: dictForDefiningType[neededExtention]
           }
       );
         
