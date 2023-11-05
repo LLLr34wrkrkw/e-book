@@ -101,7 +101,7 @@ const UploadBook =  ({navigation}) => {
     {
     
           views.push(
-            <TouchableWithoutFeedback onPress={()=>pickFiles(extention_of_file)}>
+            <TouchableWithoutFeedback key={extention_of_file + "Touchable"} onPress={()=>pickFiles(extention_of_file)}>
               <View key={extention_of_file} style={styles.forUploadBookOptions}>
                       <Text style={{fontSize: 20, color:"white"}}>Select {extention_of_file} file to upload</Text>
               </View>      

@@ -63,7 +63,7 @@ else{
                     dirForTxt = await parse_json(jsonForExtention['txt']);
                    
                     dirForDocx = await parse_json(jsonForExtention['docx']);
-                    console.log(dirForDocx);
+                    
                     dirForDoc = await parse_json(jsonForExtention['doc']);
                     
                     navigation.navigate('Books', {paramKeyForPdf: dirForPdf,  paramKeyForHtml: dirForHtml, paramKeyForTxt: dirForTxt, paramKeyForDocx: dirForDocx, paramKeyForDoc: dirForDoc});
