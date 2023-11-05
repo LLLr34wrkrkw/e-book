@@ -21,7 +21,7 @@ npm i expo-document-picker
 npm i expo-intent-launcher
 npm i @bildau/rn-pdf-reader
 npm i react-native-popup-menu
-npm i react-native-webview@13.2.2
+
 
 Далее, введите команду npx expo start в терминале VScode.
 
