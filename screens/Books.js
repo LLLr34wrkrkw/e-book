@@ -71,6 +71,7 @@ export default function Books({navigation, route})
     const views2 = [];
     const arrForPdfReader = [dirForDocx,  dirForPdf, dirForTxt, dirForDoc, dirForHtml];
     const extentions = ['Docx',  'Pdf', 'Txt', 'Doc', 'Html'];
+    const extentions_without_capital_letter = ['docx', 'pdf', 'txt', 'doc', 'html'];
     const dictForDefiningType = {
         'pdf' : 'application/pdf',
         'html' : 'text/html',
@@ -88,11 +89,13 @@ export default function Books({navigation, route})
     if(Platform.OS == 'ios')
     {
         
+        let current_extention = 0;
         for(let currentDir of arrForPdfReader)
         {
             for(let [fileName, pathToFile] of Object.entries(currentDir))
             {
                 let counter = i;
+                const const_current_extention = current_extention;
                     views2.push(
                         <TouchableWithoutFeedback style={styles.menuTriggerTouchable} key={fileName + 'pdf' + 'Touchable'} onPress={() => navigation.navigate('Read', {paramKey: pathToFile})} onLongPress={()=>{arr[counter].open();}} >
                             <View style={styles.touchableView}>              
@@ -110,7 +113,7 @@ export default function Books({navigation, route})
                                                         </MenuOption>
                                                     
 
-                                                        <MenuOption key={fileName + 'MenuOption2' + 'pdf'} onSelect={() => {delete_key_from_json(fileName, jsonForExtension[extentions[i]]); navigation.navigate('Home')}} text='Delete' style={styles.menuOption}>
+                                                        <MenuOption key={fileName + 'MenuOption2' + 'pdf'} onSelect={() => {delete_key_from_json(fileName, jsonForExtension[extentions_without_capital_letter[const_current_extention]]); navigation.navigate('Home')}} text='Delete' style={styles.menuOption}>
                                                         </MenuOption>
 
                                                     </MenuOptions>
@@ -122,6 +125,7 @@ export default function Books({navigation, route})
                      );
                      i++;
                  }
+                 current_extention++;
         
         }
 
@@ -170,9 +174,10 @@ export default function Books({navigation, route})
             }*/
     }
     else{
-        
+        let current_extention = 0;
         for(let currentDir of arrForPdfReader)
         {
+            const const_current_extention = current_extention;
             for(let [fileName, pathToFile] of Object.entries(currentDir))
             {
                 let counter = j;
@@ -202,7 +207,7 @@ export default function Books({navigation, route})
                                                 </MenuOption>
                                             
 
-                                                <MenuOption  key={fileName + 'androidOption2'} onSelect={ () => { delete_key_from_json(fileName, jsonForExtension[extentions[j]]);navigation.navigate('Home')}} text='Delete' style={styles.menuOption}>
+                                                <MenuOption  key={fileName + 'androidOption2'} onSelect={ () => { delete_key_from_json(fileName, jsonForExtension[extentions_without_capital_letter[const_current_extention]]);navigation.navigate('Home')}} text='Delete' style={styles.menuOption}>
                                                 </MenuOption>
 
                                             </MenuOptions>
@@ -215,8 +220,10 @@ export default function Books({navigation, route})
 
                             </MenuProvider>
                     );
+                 j++;
             }
-            j++;
+            current_extention++;
+           
         }
 
         /*
