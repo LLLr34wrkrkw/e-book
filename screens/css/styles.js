@@ -21,6 +21,7 @@ export default StyleSheet.create({
       {
          fontSize: 18,
          height: 30,
+         flex: 0.8,
          
     //     backgroundColor: '#40c8ff',
          justifyContent: 'center',
@@ -57,11 +58,9 @@ export default StyleSheet.create({
       },
       menuProvider:
       {
-        borderTopWidth: 2,
-        borderBottomWidth: 2,
-        borderBottomColor: 'black',
         height: 50,
-        marginTop: 15
+        marginTop: 15,
+        flex: 1
 
       },
       forUploadBookOptions: 
@@ -82,6 +81,7 @@ export default StyleSheet.create({
       {
         color: "white",
         fontSize: 25,
+        
       },
       menuTriggerTouchable:
       {
@@ -94,5 +94,6 @@ export default StyleSheet.create({
         marginVertical: 20,
         borderRadius: 30,
         justifyContent: 'center',
+        height: 80
       }
   });

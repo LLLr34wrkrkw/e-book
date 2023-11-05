@@ -109,11 +109,11 @@ export default function Books({navigation, route})
                                                     </MenuTrigger>
                                                     <MenuOptions key={fileName + 'MenuOptions' + 'pdf'} style={styles.menuOptions}>
 
-                                                        <MenuOption  key={fileName + 'MenuOption' + 'pdf'} onSelect={() => Sharing.shareAsync('file:' + pathToFile)} text='Share' style={styles.menuOption}>
+                                                        <MenuOption  key={fileName + 'MenuOption' + 'pdf'} onSelect={() => Sharing.shareAsync('file:' + pathToFile)} text="" style={styles.menuOption}><Text style={{fontSize:22}}>Share this file</Text> 
                                                         </MenuOption>
                                                     
 
-                                                        <MenuOption key={fileName + 'MenuOption2' + 'pdf'} onSelect={() => {delete_key_from_json(fileName, jsonForExtension[extentions_without_capital_letter[const_current_extention]]); navigation.navigate('Home')}} text='Delete' style={styles.menuOption}>
+                                                        <MenuOption key={fileName + 'MenuOption2' + 'pdf'} onSelect={() => {delete_key_from_json(fileName, jsonForExtension[extentions_without_capital_letter[const_current_extention]]); navigation.navigate('Home')}} text="" style={styles.menuOption}><Text style={{fontSize:22}}>Delete this file</Text>
                                                         </MenuOption>
 
                                                     </MenuOptions>
@@ -174,56 +174,52 @@ export default function Books({navigation, route})
             }*/
     }
     else{
+                    
         let current_extention = 0;
         for(let currentDir of arrForPdfReader)
         {
-            const const_current_extention = current_extention;
             for(let [fileName, pathToFile] of Object.entries(currentDir))
             {
                 let counter = j;
-                views2.push
-                    (
-                            <MenuProvider  key={fileName + 'androidMenuProvider'} style={styles.menuProvider}>
-                                <TouchableWithoutFeedback  key={fileName + 'androidTouchable'} onPress={ () => {uri = "file:" + pathToFile;
-                                        FileSystem.getContentUriAsync(uri).then(cUri => {
-                                        IntentLauncher.startActivityAsync('android.intent.action.VIEW', {
-                                            data: cUri,
-                                            flags: 1,
-                                            type: dictForDefiningType[extentions[j]]
-                                        });
-                                    });}} onLongPress={()=>{arr[counter].open(); counter++}} >
+                const const_current_extention = current_extention;
+                    views2.push(
+                        <TouchableWithoutFeedback style={styles.menuTriggerTouchable} key={fileName + 'pdf' + 'Touchable'} onPress={() => {uri = "file:" + pathToFile;
+                        FileSystem.getContentUriAsync(uri).then(cUri => {
+                        IntentLauncher.startActivityAsync('android.intent.action.VIEW', {
+                            data: cUri,
+                            flags: 1,
+                            type: dictForDefiningType[extentions[j]]
+                        });
+                    });}} onLongPress={()=>{arr[counter].open();}} >
+                            <View style={styles.touchableView}>              
+                                <MenuProvider style={styles.menuProvider} key={fileName + extentions_without_capital_letter[current_extention] + 'MenuProvider'}>
                                 
-                                    <View key={fileName + 'android'}>
+                                            <Menu  ref={c => (arr.push(c))} style={styles.menu}  key={fileName + 'Menu' + extentions_without_capital_letter[current_extention]}> 
+                                            <Text style={styles.menuTriggerText} numberOfLines={1} > {(fileName.lastIndexOf('.') != -1) ? fileName.substring(0, fileName.lastIndexOf('.')) : fileName}</Text>
+                                    
+                                                    <MenuTrigger key={fileName + 'MenuTrigger' + extentions_without_capital_letter[current_extention]} style={styles.menuTrigger}>
 
-                                        <Text  key={fileName + 'androidText'} numberOfLines={1}  style={styles.headline}> {fileName}</Text>
-                                        
-                                        <Menu  key={fileName + 'androidMenu'}  ref={c => (arr.push(c))} style={styles.menu} > 
+                                                    </MenuTrigger>
+                                                    <MenuOptions key={fileName + 'MenuOptions' + extentions_without_capital_letter[current_extention]} style={styles.menuOptions}>
 
-                                            <MenuTrigger  key={fileName + 'androidMenuTrigger'} text="" />
+                                                        <MenuOption  key={fileName + 'MenuOption' + extentions_without_capital_letter[current_extention]} onSelect={() => Sharing.shareAsync('file:' + pathToFile)} text="" style={styles.menuOption}><Text style={{fontSize:22}}>Share this file</Text> 
+                                                        </MenuOption>
+                                                    
 
-                                            <MenuOptions  key={fileName + 'androidMenuOptions'} style={styles.menuOptions}>
+                                                        <MenuOption key={fileName + 'MenuOption2' + extentions_without_capital_letter[current_extention]} onSelect={() => {delete_key_from_json(fileName, jsonForExtension[extentions_without_capital_letter[const_current_extention]]); navigation.navigate('Home')}} text="" style={styles.menuOption}><Text style={{fontSize:22}}>Delete this file</Text>
+                                                        </MenuOption>
 
-                                                <MenuOption  key={fileName + 'androidOption'} onSelect={() => Sharing.shareAsync('file:' + pathToFile)} text='Share' style={styles.menuOption}>
-                                                </MenuOption>
-                                            
+                                                    </MenuOptions>
 
-                                                <MenuOption  key={fileName + 'androidOption2'} onSelect={ () => { delete_key_from_json(fileName, jsonForExtension[extentions_without_capital_letter[const_current_extention]]);navigation.navigate('Home')}} text='Delete' style={styles.menuOption}>
-                                                </MenuOption>
-
-                                            </MenuOptions>
-
-                                        </Menu>
-
-                                    </View>
-
-                                </TouchableWithoutFeedback>
-
-                            </MenuProvider>
+                                            </Menu>
+                                </MenuProvider>
+                            </View>
+                        </TouchableWithoutFeedback>
                     );
-                 j++;
-            }
-            current_extention++;
-           
+                    j++;
+                }
+                current_extention++;
+
         }
 
         /*
@@ -321,4 +317,6 @@ export default function Books({navigation, route})
       )
 
 }
+
+
 
